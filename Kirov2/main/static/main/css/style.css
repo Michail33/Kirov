@@ -1,0 +1,26 @@
+body {
+    leftmargin="80"
+      bgcolor="#FFFFFF"
+}
+
+.news1 {
+    leftmargin="70"
+      bgcolor="red"
+}
+
+.news1 h2{
+      bgcolor="green"
+}
+
+#news2{
+      bgcolor="blue"
+}
+
+h2{
+      bgcolor="yellow"
+}
+
+div {
+    leftmargin="80"
+}
+
