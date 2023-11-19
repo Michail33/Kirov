@@ -1,18 +1,19 @@
-.news1 {
-    margin: 70px;
-    color: red;
+body {
+  margin: 20px;
+  background: #EAB0FF;
+}
+body h2 {
+  margin: 10px;
 }
 
+.news1 {
+  margin: 50px;
+  color: red;
+}
 .news1 h2 {
-    color: green;
+  color: green;
 }
 
 #news2 {
-    color: blue;
+  color: blue;
 }
-
-h2 {
-    color: yellow;
-}
-
-
