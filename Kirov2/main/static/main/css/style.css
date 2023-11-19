@@ -1,26 +1,18 @@
-body {
-    leftmargin="80"
-      bgcolor="#FFFFFF"
-}
-
 .news1 {
-    leftmargin="70"
-      bgcolor="red"
+    margin: 70px;
+    color: red;
 }
 
-.news1 h2{
-      bgcolor="green"
+.news1 h2 {
+    color: green;
 }
 
-#news2{
-      bgcolor="blue"
+#news2 {
+    color: blue;
 }
 
-h2{
-      bgcolor="yellow"
+h2 {
+    color: yellow;
 }
 
-div {
-    leftmargin="80"
-}
 
