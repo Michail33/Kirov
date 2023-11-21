@@ -5,7 +5,6 @@ body {
 body h2 {
   margin: 10px;
 }
-
 .news1 {
   margin: 50px;
   color: red;
@@ -13,7 +12,6 @@ body h2 {
 .news1 h2 {
   color: green;
 }
-
 #news2 {
   color: blue;
 }
