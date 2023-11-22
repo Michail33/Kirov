@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap5 %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://kit.fontawesome.com/a97047fead.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3" style="background: #EAB0FF">
+                    <h1>Новости РТ</h1>
+                        <i class="fa-solid fa-bars"></i>
+                        <h2>Боковое меню</h2>
+                        <i class="fa-solid fa-house"></i>
+                        <a href="about/">Главная страница</a> <br>
+                        <i class="fa-solid fa-pencil"></i>
+                        <a href="about/">Про нас</a> <br>
+                        <i class="fa-regular fa-envelope"></i>
+                        <a href="contacts/">Контакты</a> <br>
+                        <i class="fa-solid fa-photo-film"></i>
+                        <a href="content/">Содержание</a>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+                    <h1>Содержание</h1><br>
+                    <p>"Ваши тропы - у вас под ногами. Каждый увидит свою в должное время."</p>
+                    <img src="https://sun9-33.userapi.com/impf/c633222/v633222825/45e67/N6M1XModZBw.jpg?size=500x614&quality=96&sign=52a58f200913ddeb0b5939c0f6d3636a&c_uniq_tag=KId8mMNJTNDnN-Yx2XdguowRZw4pLjFfRehikFHNNCE&type=album">
+                    <h2>Head2</h2>
+        <!--                <p align="center" >Параграф</p>-->
+        <!--                <a href="about/">о нас</a> <br>-->
+        <!--                <a href="contacts/">контакты</a> <br>-->
+<!--                        <a href="content/">содержимое</a>-->
+        <!--            <div class="news1">-->
+        <!--                <h2>News</h2>-->
+        <!--                <p>News text</p>-->
+        <!--            </div>-->
+                    <div id="news2">
+                        <h2>News2</h2>
+                        <p>News text2</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
