@@ -21,8 +21,12 @@ from django.urls import path
 #]
 from . import views
 urlpatterns = [
-    path('', views.index, name='home' ),
+    path('', views.index, name='home'),
+    path('product/<int:a>/detail/<int:b>/', views.get_demo),
+    path('calc/<int:a>/<slug:operation>/<int:b>/', views.addr_calc),
     path('about/', views.about, name='about'),
+    path('news/', views.news, name='news'),
     path('contacts/', views.contacts, name='contact'),
     path('content/', views.content, name='content'),
+    path('sidebar/', views.sidebar, name='sidebar'),
 ]
