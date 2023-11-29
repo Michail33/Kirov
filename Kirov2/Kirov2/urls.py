@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('home/', include('home.urls')),
+    path('news/', include('news.urls')),
     # http://127.0.0.1:8000/
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'main',
     'bootstrap5',
     'home',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru' #'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -120,7 +121,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+print('Путь к папке:', BASE_DIR)
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
     BASE_DIR / "static",
