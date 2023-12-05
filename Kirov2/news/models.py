@@ -28,9 +28,10 @@ class Article(models.Model):
     date = models.DateTimeField('Дата публикации', auto_created='', auto_now=True)
     category = models.CharField(choices=categories, max_length=10, verbose_name='Категории')
     tags = models.ManyToManyField(to=Tag, blank=True)
-    #slug = models.SlugField
+    slug = models.SlugField(unique=True) # самозаполняемое поле
     objects = models.Manager() # покажет только сегодняшние новости
     published = PublishedToday() # покажет только сегодняшние новости
+
     #методы моделей
     def __str__(self):
         return (f'Новость: {self.title} от {str(self.date) [:16]}')
