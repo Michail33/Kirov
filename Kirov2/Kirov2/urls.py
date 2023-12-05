@@ -35,6 +35,19 @@ urlpatterns = [
     path('', include('main.urls')),
     path('home/', include('home.urls')),
     path('news/', include('news.urls')),
+    path('users/', include('users.urls')),
     # http://127.0.0.1:8000/
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns=[
+        path('__debug/__', include(debug_toolbar.urls))
+    ] + urlpatterns
+
+    urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) это можно добавить к СТАТИК (уже изменено)
+
+admin.site.site_header = "Панель администрирования новостей"
+admin.site.index_title = "Новости РТ-Киров"

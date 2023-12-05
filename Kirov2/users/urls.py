@@ -21,15 +21,6 @@ from django.urls import path
 #]
 from . import views
 urlpatterns = [
-    path('', views.index, name='home'),
-    # path('', views.index, name='home'),
-    # path('', views.sidebar, name='sidebar'),
-    # path('', views.sidebar, name='home'),
-    path('product/<int:a>/detail/<int:b>/', views.get_demo),
-    path('calc/<int:a>/<slug:operation>/<int:b>/', views.addr_calc),
-    path('about/', views.about, name='about'),
-    path('news/', views.news, name='news'),
-    path('contacts/', views.contacts, name='contact'),
-    path('content/', views.content, name='content'),
-
+    path('', views.index, name='user_index'),
+    path('contact_page/', views.contact_page, name='contact_page'),
 ]

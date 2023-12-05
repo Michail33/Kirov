@@ -6,8 +6,30 @@ from django.shortcuts import render
 # Create your views here.
 from .models import News, Product
 from home.models import Demo
+from news.models import Article
+# zan08: не понял, куда писать код (в какой файл)
+from django.db import connection, reset_queries
 def index(request):
-    print('Это модель из другого приложения', Demo)
+    # пирмеры values, values_list
+    # all_news = Article.objects.all().values('author', 'title')
+    # for a in all_news:
+    #     print(a['author'], a['title'])
+    # all_news = Article.objects.all().values_list('author', 'title') # возвращает кортежи
+    # for a in all_news:
+    #     print(a)
+    # all_news = Article.objects.all().values_list() # все записи
+    # for a in all_news:
+    #     print(a)
+    # all_news = Article.objects.all().values_list('title')# возвращает кортежи, потребует извлекать значение сложнее
+    # print(all_news)
+    # all_news = Article.objects.all().values_list('title', flat=True)# возвращает кортежи, потребует извелекать значения по индексу
+    # print(all_news)
+    # print(all_news)
+    # print(connection.queries)
+    # reset_queries()
+    # author_list = User.objects.all()
+    # print(connection.queries)
+    #print('Это модель из другого приложения', Demo)
     # value = 10
     # n1 = News ('News1', 'Text1', '07.11.2023')
     # n2 = News ('News2', 'Text2', '05.11.2023')
@@ -39,6 +61,31 @@ def index(request):
         'water': water,
         'chocolate': chocolate
     }
+    # # по старому
+    # article = Article.objects.get(id=1)
+    # print(article.author.username)
+    # select_related Один к одному, Один ко многим
+    article = Article.objects.select_related('author').get(id=1)
+    print(article.author.username)
+    # prefetch_related многие ко многим
+    # article = Article.objects.all()
+    # for a in article:
+    #     print(a.title, a.tags.all())
+    article = Article.objects.prefetch_related('tags').all()
+    print(article)
+    # пример аннотирования и агрегации
+    from django.db.models import Count, Avg, Max
+    from django.contrib.auth.models import User
+    count_articles = User.objects.annotate(Count('article', distinct=True)).order_by('article__count')
+    for user in count_articles:
+        print('User==', user, 'кол-во--', user.article__count)
+    count_articles = User.objects.annotate(Count('article', distinct=True)).aggregate(Avg('article__count'))
+    print('Среднее кол-во===', count_articles)
+    max_articles_count_user = User.objects.annotate(Count('article', distinct=True)).aggregate(Max('article__count'))
+    print('Максималист---', max_articles_count_user, 'User==', user)
+    max_articles_count = User.objects.annotate(Count('article', distinct=True)).aggregate(Max('article__count'))
+    max_articles_count_users = User.objects.annotate(Count('article', distinct=True)).filter(article__count__exact=max_articles_count['article__count__max'])
+    print('Максималисты---', max_articles_count_users )
     return render(request, 'main/index.html', context)
 
 def get_demo(request, a, b):

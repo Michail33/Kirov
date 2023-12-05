@@ -5,6 +5,9 @@ body {
 body h2 {
   margin: 10px;
 }
+.contact_form {
+  margin: 10px 20%;
+}
 .news1 {
   margin: 50px;
   color: red;
