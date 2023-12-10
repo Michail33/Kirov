@@ -5,19 +5,44 @@ from django.db.models import Count
 # Register your models here.
 from .models import *
 
+class ArticleFilter(admin.SimpleListFilter):
+    title = 'По длине новости'
+    parameter_name = 'text'
+
+    def lookups(self, request, model_admin):
+        return [('S', ("Короткие, <100 зн.")),
+                ('M', ("Средние, 100-500 зн.")),
+                ('L', ("Длинные, >500 зн."))]
+
+    def queryset(self, request, queryset):
+        if self.value() == 'S':
+            return queryset.annotate(text_len=Length('text')).filter(text_len__lt=100)
+        elif self.value() == 'M':
+            return queryset.annotate(text_len=Length('text')).filter(text_len__lt=500, text_len__gte=100)
+        elif self.value() == 'L':
+            return queryset.annotate(text_len=Length('text')).filter(text_len__gt=500)
+
+class ArticleImageInline(admin.TabularInline):
+    model = Image
+    extra = 3
+    readonly_fields = ('id','image_tag')
+
 class ArticleAdmin(admin.ModelAdmin):
     ordering = ['-date', 'title', 'author']
-    list_display = ['title', 'author', 'date', 'symbols_count']
-    list_filter = ['title', 'author', 'date']
+    list_display = ['title', 'author', 'date', 'symbols_count', 'image_tag']
+    list_filter = ['date', ArticleFilter]
     list_display_links = ['date']
+    search_fields = ['title', 'tags__title']  #__startswith, __icontains
+    filter_horizontal = ['tags']  #filter_vertical = ['tags']
     #list_editable = ['title', 'author'] # не работает для полей типа ManyToMany M2M
     #readonly_fields = ['author', 'title']
     prepopulated_fields = {"slug": ("title",)}
     list_per_page = 5
+    inlines = [ArticleImageInline, ]
 
     @admin.display(description='Длина', ordering='_simbols')
-    def symbols_count(self, article:Article):
-        return f"Символы: {len(article.text )}"
+    def symbols_count(self, article: Article):
+        return f"Символы: {len(article.text)}"
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -28,6 +53,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ['title', 'status', 'tag_count']
     list_filter = ['title', 'status']
+    actions = ['set_true', 'set_false']
 
     @admin.display(description='Использований', ordering='tag_count')
     def tag_count(self, object):
@@ -37,6 +63,15 @@ class TagAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         queryset = queryset.annotate(tag_count=Count('article'))
         return queryset
+
+    @admin.action(description='Активировать выбранные теги')
+    def set_true(self, request, queryset):
+        amount = queryset.update(status=True)
+        self.message_user(request, f'Активировано {amount} тегов')
+    @admin.action(description='Деаактивировать выбранные теги')
+    def set_false(self, request, queryset):
+        amount = queryset.update(status=False)
+        self.message_user(request, f'ДАктивировано {amount} тегов')
 
 # admin.site.register(Tag, TagAdmin)
 admin.site.register(Article, ArticleAdmin)

@@ -41,7 +41,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns=[
+    urlpatterns = [
         path('__debug/__', include(debug_toolbar.urls))
     ] + urlpatterns
 
@@ -49,5 +49,6 @@ if settings.DEBUG:
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) это можно добавить к СТАТИК (уже изменено)
 
-admin.site.site_header = "Панель администрирования новостей"
+admin.site.site_header = "Панелька администрирования новостей"
 admin.site.index_title = "Новости РТ-Киров"
+admin.site.index_template = 'main/custom_admin.html'

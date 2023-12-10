@@ -37,6 +37,7 @@ class Article(models.Model):
     date = models.DateTimeField('Дата публикации', auto_created='', auto_now=True)
     category = models.CharField(choices=categories, max_length=10, verbose_name='Категории')
     tags = models.ManyToManyField(to=Tag, blank=True)
+    #status = models.BooleanField(default=True)
     slug = models.SlugField(unique=True)  # самозаполняемое поле, unique=True дает ошибку при миграции в уже созданную таблицу
     objects = models.Manager()  # покажет только сегодняшние новости
     published = PublishedToday()  # покажет только сегодняшние новости
@@ -53,6 +54,14 @@ class Article(models.Model):
         for t in self.tags.objects.all():
             s += t.title+''
             return s
+
+    def image_tag(self):
+        image = Image.objects.filter(article=self)
+        print('!!!!!!!', image)
+        if image:
+            return mark_safe(f'<img src="{image[0].image.url}" height="50px" width="auto" />')
+        else:
+            return '(no image)'
 
     # метаданные  модели
     class Meta:

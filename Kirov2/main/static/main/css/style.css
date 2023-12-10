@@ -18,3 +18,15 @@ body h2 {
 #news2 {
   color: blue;
 }
+#header {
+    background: #EA18FF;
+    color: black;
+}
+div.breadcrumbs {
+    background: #EA65FF;
+    color: black;
+}
+.module caption{
+    background: #EA35FF;
+
+}
