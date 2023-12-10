@@ -47,6 +47,8 @@ def index(request):
     # пример применения пользовательского менеджера class PublishedToday(models.Manager) из news/models
     # articles = Article.published.all()
     # context = {'today_article':articles}
+    it = Tag.objects.filter(title = 'IT').first()
+    print('IT used:', it.tag_count())
 
     reset_queries()
     author_list = User.objects.all()

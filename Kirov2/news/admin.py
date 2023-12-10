@@ -40,3 +40,7 @@ class TagAdmin(admin.ModelAdmin):
 
 # admin.site.register(Tag, TagAdmin)
 admin.site.register(Article, ArticleAdmin)
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'article', 'image_tag']

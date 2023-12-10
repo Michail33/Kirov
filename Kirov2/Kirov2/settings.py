@@ -134,6 +134,13 @@ STATICFILES_DIR = [
 ]
 print('Путь к папке STATICFILES_DIR: ', BASE_DIR)
 
+# Полный сброс миграции таблиц
+# python manage.py migrate --fake-initial
+#
+# Сброс миграции отдельной таблицы
+# python manage.py migrate --fake MyApp zero
+# python manage.py makemigrations
+
 import os
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
