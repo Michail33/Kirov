@@ -38,7 +38,8 @@ class Article(models.Model):
     category = models.CharField(choices=categories, max_length=10, verbose_name='Категории')
     tags = models.ManyToManyField(to=Tag, blank=True)
     #status = models.BooleanField(default=True)
-    slug = models.SlugField(unique=True)  # самозаполняемое поле, unique=True дает ошибку при миграции в уже созданную таблицу
+    slug = models.SlugField(unique=False)
+    # slug = models.SlugField(unique=True)  # самозаполняемое поле, unique=True дает ошибку при миграции в уже созданную таблицу
     objects = models.Manager()  # покажет только сегодняшние новости
     published = PublishedToday()  # покажет только сегодняшние новости
 

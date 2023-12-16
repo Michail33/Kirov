@@ -14,6 +14,14 @@ class ArticleDetailView(DetailView):
     template_name = 'news/news_detail.html'
     context_object_name = 'article'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        current_object = self.object
+        images = Image.objects.filter(article=current_object)
+        context['images'] = images
+        return context
+
+
 class ArticleUpdateView(UpdateView):
     model = Article
     success_url =  reverse_lazy('news_index')
@@ -29,7 +37,7 @@ class ArticleDeleteView(DeleteView):
 @login_required(login_url="/") # человек не залогинился - отправляем на другую страницу
 def create_article(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             current_user = request.user
             if current_user.id != None: # проверили что не аноним
@@ -37,22 +45,49 @@ def create_article(request):
                 new_article.author = current_user
                 new_article.save() #сохраняем в БД
                 print('id новой новости ===',new_article.id) # вывод ИД новой новости
-                form.save_m2m()
+                form.save_m2m() #сохраняем теги в БД
+                for img in request.FILES.getlist('image_field'):
+                    Image.objects.create(article=new_article, image=img, title=img.name)
                 return redirect('news_index')
     else:
         form = ArticleForm()
     return render(request, 'news/create_article.html', {'form':form})
 
-def index(request):
-    # пример применения пользовательского менеджера class PublishedToday(models.Manager) из news/models
-    # articles = Article.published.all()
-    # context = {'today_article':articles}
-    # it = Tag.objects.filter(title = 'IT').first()
-    # print('IT used:', it.tag_count())
+# def index(request):
+#     # пример применения пользовательского менеджера class PublishedToday(models.Manager) из news/models
+#     # articles = Article.published.all()
+#     # context = {'today_article':articles}
+#     # it = Tag.objects.filter(title = 'IT').first()
+#     # print('IT used:', it.tag_count())
+#
+#     reset_queries()
+#     author_list = User.objects.all()
+#     print(connection.queries)
 
-    reset_queries()
-    author_list = User.objects.all()
-    print(connection.queries)
+from time import time
+def index(request):
+    t = time()
+    print(t)
+    categories = Article.categories #создали перечень категорий
+    author_list = User.objects.all() #создали перечень авторов
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        selected_category = int(request.POST.get('category_filter'))
+        if selected_author == 0: #выбраны все авторы
+            articles = Article.objects.all()
+        else:
+            articles = Article.objects.filter(author=selected_author)
+        if selected_category != 0: #фильтруем найденные по авторам результаты по категориям
+            articles = articles.filter(category__icontains=categories[selected_category-1][0])
+    else: #если страница открывется впервые
+        selected_author = 0
+        selected_category = 0
+        articles = Article.objects.all()
+
+    context = {'articles': articles, 'author_list':author_list, 'selected_author':selected_author,
+               'categories':categories,'selected_category': selected_category}
+
+    return render(request,'news/news_list.html',context)
 
 def news(request):
     # запрос к БД со связкой по ИД
