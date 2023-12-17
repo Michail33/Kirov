@@ -65,29 +65,36 @@ def create_article(request):
 #     print(connection.queries)
 
 from time import time
+from django.core.paginator import Paginator
+# def pagination(request):
+#     articles = Article.objects.all()
+
 def index(request):
     t = time()
     print(t)
-    categories = Article.categories #создали перечень категорий
-    author_list = User.objects.all() #создали перечень авторов
+    categories = Article.categories  #создали перечень категорий
+    author_list = User.objects.all()  #создали перечень авторов
     if request.method == "POST":
         selected_author = int(request.POST.get('author_filter'))
         selected_category = int(request.POST.get('category_filter'))
-        if selected_author == 0: #выбраны все авторы
+        if selected_author == 0:  #выбраны все авторы
             articles = Article.objects.all()
         else:
             articles = Article.objects.filter(author=selected_author)
-        if selected_category != 0: #фильтруем найденные по авторам результаты по категориям
+        if selected_category != 0:  #фильтруем найденные по авторам результаты по категориям
             articles = articles.filter(category__icontains=categories[selected_category-1][0])
-    else: #если страница открывется впервые
+    else:  #если страница открывется впервые
         selected_author = 0
         selected_category = 0
         articles = Article.objects.all()
+    total = len(articles)
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,
+               'categories': categories,'selected_category': selected_category, 'total': total,}
 
-    context = {'articles': articles, 'author_list':author_list, 'selected_author':selected_author,
-               'categories':categories,'selected_category': selected_category}
-
-    return render(request,'news/news_list.html',context)
+    return render(request,'news/news_list.html', context)
 
 def news(request):
     # запрос к БД со связкой по ИД
