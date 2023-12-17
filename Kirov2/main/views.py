@@ -99,7 +99,7 @@ def addr_calc(request, a, operation, b ): #Не работает
      return HttpResponse(f'You input: {a} and  {b}<br> {operation} = {result}')
 
 def sidebar(request):
-    return render(request, 'main/sidebar.html')
+    return render(request, 'main/sidebar2.html')
 def about(request):
     return render(request, 'main/about.html')
 def contacts(request):

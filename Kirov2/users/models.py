@@ -18,5 +18,5 @@ class Account(models.Model):
 
     class Meta:
         ordering = ['user']
-        verbose_name = 'Юзер'
-        verbose_name_plural = 'Юзеррыы'
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'

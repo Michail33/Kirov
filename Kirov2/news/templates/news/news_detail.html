@@ -30,7 +30,7 @@
                         {% for image in article.image_set.all %}
                         <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
                             <img class="d-block" src="{{ image.image.url }}"
-                                 style="margin:auto; height:300px; width:auto; border-radius:5px;">
+                                 style="margin:auto; height:300px; width:auto; border-radius:10px;">
                         </div>
                         {% endfor %}
                     </div>
