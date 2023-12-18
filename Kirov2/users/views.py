@@ -4,12 +4,18 @@ from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.contrib import messages
+from django.contrib.auth.models import Group
+
+def profile(request):
+    return render(request, 'users/user_panel.html')
 def registration(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             print('Сообщение отправлено', form.cleaned_data)
-            form.save()  #появляется новый пользователь
+            user = form.save()  #появляется новый пользователь
+            group = Group.objects.get(name='Authors')
+            user.groups.add(group)
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             # не аутентифицируется нужно доделать

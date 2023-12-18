@@ -9,6 +9,7 @@ from django.db import connection, reset_queries
 from django.contrib.auth.decorators import login_required # человек не залогинился - отправляем на другую страницу
 from .forms import *
 
+
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'news/news_detail.html'
@@ -33,8 +34,9 @@ class ArticleDeleteView(DeleteView):
     success_url = reverse_lazy('news_index') # именованная ссылка или абсолютная
     template_name = 'news/delete_article.html'
 
-
+from django.conf import settings
 @login_required(login_url="/") # человек не залогинился - отправляем на другую страницу
+# @login_required(login_url=settings.LOGIN_URL) #  другой вариант: человек не залогинился - отправляем на другую страницу
 def create_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
