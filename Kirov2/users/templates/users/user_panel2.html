@@ -36,27 +36,33 @@
 
                   </li>
               {% endif %}
-<!--              <li class="nav-item">-->
-<!--                  <a href="{% url 'home' %}" {% if request.path =='/' %} class="link-active" aria-current="page" {% endif %}>-->
-<!--                      <i class="fa fa-house menu-icon {% if request.path  == '/' %} link-active {% endif %}" ></i>-->
-<!--                      <div class="d-none d-lg-block">Главная</div>-->
-<!--                  </a>-->
-<!--              </li>-->
+              <li class="nav-item">
+                  <a href="#" class="link-active" aria-current="page" >
+                      <i class="fa fa-house menu-icon {% if request.path  == '/' %} link-active {% endif %}" ></i>
+                      <div class="d-none d-lg-block">Главная</div>
+                  </a>
+              </li>
+
+
               <li>
-                <a href="#" {% if request.path  =='/search/' %} class="link-active" aria-current="page" {% endif %}>
-                    <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Мой профиль </div>
+                <a href="#"  class="link-active" aria-current="page" >
+                   <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Мой профиль</div>
+
                 </a>
               </li>
               <li>
-                <a href="#" {% if request.path  =='/search/' %} class="link-active" aria-current="page" {% endif %}>
-                    <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Мои статьи </div>
+                <a href="#" class="link-active" aria-current="page" >
+                    <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Мои статьи</div>
+
                 </a>
               </li>
               <li>
-                <a href="{% url 'logout'%}" {% if request.path  =='/search/' %} class="link-active" aria-current="page" {% endif %}>
-                    <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Выход из аккаунта </div>
+                <a href="{% url 'logout' %}"  class="link-active" aria-current="page" >
+                    <i class="fa fa-magnifying-glass menu-icon"></i>   <div class="d-none d-lg-block"> Выход из аккаунта</div>
+
                 </a>
               </li>
+
             </ul>
             <hr>
 

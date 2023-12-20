@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.contrib.auth.models import Group
 
 def profile(request):
-    return render(request, 'users/user_panel.html')
+    return render(request, 'users/profile.html' )
+    # return render(request, 'users/user_panel.html')
 def registration(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
