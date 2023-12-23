@@ -15,15 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -32,12 +23,23 @@ handler404 = main_views.custom_404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('selectlanguage/',main_views.selectlanguage, name='selectlanguage'),
+    path('i18n/',include('django.conf.urls.i18n')),
+    # path('', include('main.urls')),
+    # path('home/', include('home.urls')),
+    # path('news/', include('news.urls')),
+    # path('users/', include('users.urls')),
+    # http://127.0.0.1:8000/
+]  # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += i18n.i18n_patterns(
     path('', include('main.urls')),
-    path('home/', include('home.urls')),
     path('news/', include('news.urls')),
     path('users/', include('users.urls')),
-    # http://127.0.0.1:8000/
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('home/', include('home.urls')),
+    #htpp://127.0.0.1:8000/
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     import debug_toolbar
