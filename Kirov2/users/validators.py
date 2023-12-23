@@ -6,6 +6,6 @@ def russian_email(email):
                        '@yandex.ru']
     if not any(domain in email for domain in allowed_domains):
         raise ValidationError(
-            _("%(email) has not allowed domain"), params = {'email': email}
+            _("%(email) has not allowed domain"), params={'email': email}
         )
 
