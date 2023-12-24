@@ -12,7 +12,10 @@ from home.models import Demo
 from news.models import Article
 # zan08: не понял, куда писать код (в какой файл)
 from django.db import connection, reset_queries
+
 def index(request):
+    return render(request,'main/index.html')
+def examples(request):
     # пирмеры values, values_list
     # all_news = Article.objects.all().values('author', 'title')
     # for a in all_news:
@@ -91,8 +94,21 @@ def index(request):
     print('Максималисты---', max_articles_count_users )
     return render(request, 'main/index.html', context)
 
-def get_demo(request, a, b):
-    return HttpResponse(f'You input: {a} and  {b}<br> sum a + b = {a+b}')
+# def get_demo(request, a, b):
+#     return HttpResponse(f'You input: {a} and  {b}<br> sum a + b = {a+b}')
+def get_demo(request, a, operation, b):
+    match operation:
+        case 'plus':
+            result = int(a)+ int(b)
+        case 'minus':
+            result = int(a) - int(b)
+        case 'multiply':
+            result = int(a) * int(b)
+        case 'divide':
+            result = int(a) / int(b)
+        case _:
+            return HttpResponse(f'Неверная команда')
+    return HttpResponse(f'Вы ввели: {a} и {b} <br>Результат {operation}: {result}')
 
 def addr_calc(request, a, operation, b ): #Не работает
 #     match operation:
@@ -102,7 +118,7 @@ def addr_calc(request, a, operation, b ): #Не работает
      return HttpResponse(f'You input: {a} and  {b}<br> {operation} = {result}')
 
 def sidebar(request):
-    return render(request, 'main/sidebar2.html')
+    return render(request, 'main/sidebar.html')
 def about(request):
     return render(request, 'main/about.html')
 def contacts(request):
@@ -118,7 +134,7 @@ def custom_404(request, exception):
     return HttpResponse(f'Not found!!! <br><br>{exception}')
 
 def selectlanguage(request):
-    #в 25 символов входит корневой катлого + код языка из двух букв + '/'
+    #в 25 символов входит корневой каталог + код языка из двух букв + '/'
     url = request.META.get('HTTP_REFERER')[25:]
     # print('URL:',url)
     if request.method =='POST':
