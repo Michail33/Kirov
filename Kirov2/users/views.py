@@ -31,6 +31,28 @@ def registration(request):
     context = {'form': form}
     return render(request, 'users/registration.html', context)
 
+def registration_email(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            print('Сообщение отправлено', form.cleaned_data)
+            user = form.save()  #появляется новый пользователь
+            group = Group.objects.get(name='Authors')
+            user.groups.add(group)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            # не аутентифицируется нужно доделать
+            user = authenticate(username=username, password=password)  #аутентификация пользователя
+            messages.success(request, f'{username} был зарегистрирован!')
+            return redirect('home')
+        else:
+            print(form.errors)
+    else:
+        form = UserCreationForm()
+    context = {'form': form}
+    return render(request, 'users/registration.html', context)
+
+
 def profile_update(request):
     user = request.user
     account = Account.objects.get(user=user)

@@ -24,6 +24,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='user_index'),
     path('contact_page/', views.contact_page, name='contact_page'),
+    path('registration_email/', views.registration_email, name='registration_email'),
+    path('login_email/', auth_views.LoginView.as_view(template_name='users/login_email.html'), name='login_email'),
     path('registration/', views.registration, name='registration'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
