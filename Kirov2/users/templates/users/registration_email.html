@@ -1,0 +1,29 @@
+{% extends 'main/base_template.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% load crispy_forms_tags %}
+{% block title %} Регистрация по Email {% endblock %}
+
+{% block content %}
+        <div class="row">
+            <div class="text-center" style="margin-top:30px;">
+                <h1 >Регистрация нового пользователя по Email </h1>
+                <form method="post" class="contact_form">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+<!--                    <input type= >  # можно добавить любое поле для регистрации-->
+<!--                    <input type="text" class="btn btn-success" value="Зарегистрировать">-->
+                    <input type="submit" class="btn btn-success" value="Зарегистрировать">
+
+                </form>
+            </div>
+<!--            <form method="post" class="contact_form">-->
+<!--                {% csrf_token %}-->
+<!--                {{ form | crispy }}-->
+<!--&lt;!&ndash;            {{ form.as_ul }}&ndash;&gt;-->
+<!--&lt;!&ndash;            {{ form.as_p }}&ndash;&gt;-->
+<!--&lt;!&ndash;            #{{ form.as_table }}&ndash;&gt;-->
+<!--                <input type="submit" class="btn btn-success" value="Отправить">-->
+<!--            </form>-->
+        </div>
+{% endblock %}
